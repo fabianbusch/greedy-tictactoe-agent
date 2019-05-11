@@ -31,7 +31,7 @@ class TicTacToeGame:
         if self.done(): # If game is done
             return resultHandler(0, True)
 
-        if not self.squares[i] == None: # In case gameplayer selects illegal field
+        if not self.squares[i] == 'N': # In case gameplayer selects illegal field
             return resultHandler(-1, False, self.__nextStep)
 
         if self.xIsNext:
@@ -64,7 +64,7 @@ class TicTacToeGame:
         if self.__winner():
             return True
         for sq in self.squares:
-            if sq == None:
+            if sq == 'N':
                 return False
         return True
 
@@ -78,6 +78,6 @@ class TicTacToeGame:
         self.squares = []
         self.history = []
         self.xIsNext = True
-        for i in range(9):
-            self.squares = self.squares[:] + [None]
+        for i in range(0, 9):
+            self.squares[i] = 'N'
         return self.__nextStep()
