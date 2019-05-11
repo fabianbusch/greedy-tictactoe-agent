@@ -91,7 +91,7 @@ class Agent:
             file_path = 'situations_' + self.__name + '.csv'
         formed = []
         for s in self.__situations:
-            dL = list(s.getSquares().copy()) + list(s.getActions().copy())
+            dL = list(s.getSquares().copy()) + list(s.getActions().copy()) + list([s.howOften()])
             formed.append(dL)
         dfSituations = pd.DataFrame(formed)
         dfSituations.to_csv(file_path)
@@ -102,5 +102,5 @@ class Agent:
         dfLoaded = pd.read_csv(file_path, index_col=0)
         situations = []
         for s in dfLoaded.get_values():
-            situations.append(TTTSituation(s[:9], s[9:]))
+            situations.append(TTTSituation(s[:9], s[9:17], s[17]))
         self.__situations = situations
