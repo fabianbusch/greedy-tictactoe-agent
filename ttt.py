@@ -75,6 +75,7 @@ class TicTacToeGame:
 
 
     def printHistory(self):
+        print('Game history:')
         for s in self.history:
             print(s)
 
@@ -83,6 +84,6 @@ class TicTacToeGame:
         self.squares = []
         self.history = []
         self.xIsNext = True
-        for i in range(9):
+        for _ in range(9):
             self.squares.append('N')
         return self.__nextStep()

@@ -8,6 +8,7 @@ Created on Mon May  6 22:53:57 2019
 from tttsituation import TTTSituation
 import numpy as np
 import random
+import pandas as pd
 
 
 class Agent:
@@ -84,3 +85,22 @@ class Agent:
         print('My Situations:')
         for s in self.__situations:
             s.printSituation()
+
+    def saveSituations(self, file_path=None):
+        if not file_path:
+            file_path = 'situations_' + self.__name + '.csv'
+        formed = []
+        for s in self.__situations:
+            dL = list(s.getSquares().copy()) + list(s.getActions().copy())
+            formed.append(dL)
+        dfSituations = pd.DataFrame(formed)
+        dfSituations.to_csv(file_path)
+
+    def loadSituations(self, file_path=None):
+        if not file_path:
+            file_path = 'situations_' + self.__name + '.csv'
+        dfLoaded = pd.read_csv(file_path, index_col=0)
+        situations = []
+        for s in dfLoaded.get_values():
+            situations.append(TTTSituation(s[:9], s[9:]))
+        self.__situations = situations
