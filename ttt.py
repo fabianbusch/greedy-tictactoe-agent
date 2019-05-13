@@ -3,39 +3,39 @@
 """
 Created on Sun May  5 22:07:56 2019
 
+TODO: Waterfall learning
+
 @author: fabian
 """
 
 class TicTacToeGame:
     """A simple Tic Tac Toe Game"""
-    def __init__(self, cbXStep, cbOStep, debug=False):
+    def __init__(self, player1, player2, debug=False):
         self.debug = debug
-        self.cbXStep = cbXStep
-        self.cbOStep = cbOStep
+        self.player1 = player1
+        self.player2 = player2
         self.reset()
 
 
     def __nextStep(self):
         if self.xIsNext:
-            self.cbXStep(self.squares, self.__step)
+            self.__doStep(self.player1.decide(self.squares), self.player1)
         else:
-            self.cbOStep(self.squares, self.__step)
+            self.__doStep(self.player2.decide(self.squares), self.player2)
 
 
-    def __step(self, i, resultHandler):
+    def __doStep(self, i, player):
         """One step forward
 
         :param i: index for next placement
         :return: nextSituation, number, doneState
         """
 
-        if self.done(): # If game is done
-            if self.debug: print('game is done')
-            return resultHandler(0, True, None)
-
         if not self.squares[i] == 'N': # In case gameplayer selects illegal field
             if self.debug: print('illegal field')
-            return resultHandler(-1, False, self.__nextStep)
+            player.learn(-1, False, self.squares)
+            self.__nextStep()
+            return
 
         if self.xIsNext:
             self.squares[i] = 'X'
@@ -48,13 +48,16 @@ class TicTacToeGame:
 
         if self.__winner() == self.squares[i]:
             if self.debug: print('game is done,', self.squares[i], 'is winner')
-            return resultHandler(1, True, None)
+            player.learn(1, True, None)
+            return
 
         if self.done(): # If game is done
             if self.debug: print('game is done')
-            return resultHandler(0, True, None)
+            player.learn(0, True, None)
+            return
 
-        return resultHandler(0, False, self.__nextStep)
+        self.__nextStep()
+        return
 
 
     def __winner(self):

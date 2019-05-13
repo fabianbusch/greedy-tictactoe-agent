@@ -13,21 +13,20 @@ import math
 agent1 = Agent('Agent1', 0.2, 0.95, 0.3)
 agent2 = Agent('Agent2', 1, 1, 0.8)
 
-game = TicTacToeGame(agent1.decide, agent2.decide)
+game = TicTacToeGame(agent1, agent2)
 
-EPISODE = 0
-
+i = 0
 while len(agent1.getSituations()) < math.pow(3, 9):
     '''There are 3^9 possible board situations...'''
     done = False
     
-    while not done:
-        done = game.done()
-
-    if EPISODE % 1000 == 0:
-        print('Episode', EPISODE)
+    if i % 1000 == 0:
+        print('EPISODE', i)
         agent1.saveSituations()
         agent2.saveSituations()
 
+    while not done:
+        done = game.done()
+
     game.reset()
-    EPISODE += 1
+    i += 1
