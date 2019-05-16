@@ -33,7 +33,7 @@ class TicTacToeGame:
 
         if not self.squares[i] == 'N': # In case gameplayer selects illegal field
             if self.debug: print('illegal field')
-            player.learn(-1, False, self.squares)
+            player.saveForLearning(-1, False)
             self.__nextStep()
             return
 
@@ -48,14 +48,15 @@ class TicTacToeGame:
 
         if self.__winner() == self.squares[i]:
             if self.debug: print('game is done,', self.squares[i], 'is winner')
-            player.learn(1, True, None)
+            player.saveForLearning(1, True)
             return
 
         if self.done(): # If game is done
             if self.debug: print('game is done')
-            player.learn(0, True, None)
+            player.saveForLearning(0, True)
             return
 
+        player.saveForLearning(0, False)
         self.__nextStep()
         return
 

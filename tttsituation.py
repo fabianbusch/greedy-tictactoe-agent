@@ -11,7 +11,7 @@ class TTTSituation:
     def __init__(self, squares, actions, happened=1):
         self.__squares = squares
         self.__actions = actions
-        self.__happen = 1
+        self.__happen = happened
 
     def getSquares(self):
         return self.__squares
