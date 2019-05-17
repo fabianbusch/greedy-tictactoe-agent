@@ -3,9 +3,7 @@
 """
 Created on Sun May  5 22:07:56 2019
 
-TODO: Waterfall learning
-
-@author: fabian
+@author: fabianbusch
 """
 
 class TicTacToeGame:
