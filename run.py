@@ -11,7 +11,7 @@ from agent import Agent
 import matplotlib.pyplot as plt
 import math
 
-agent1 = Agent('Agent1', 0.3, 1, 0.003, deepLearn=True, debug=False)
+agent1 = Agent('Agent1', 0.3, 1, 0.001, deepLearn=True, debug=False)
 agent2 = Agent('Agent2', 1, 1, 0.1)
 
 #agent1.loadSituations()
