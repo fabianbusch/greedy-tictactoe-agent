@@ -13,6 +13,8 @@ import random
 import pandas as pd
 
 import tensorflow as tf
+import os
+import tempfile
 
 tf.enable_eager_execution()
 
@@ -35,6 +37,11 @@ class Agent:
             tf.keras.layers.Dense(9)
         ])
         self.__optimizer = tf.train.AdamOptimizer(learning_rate=self.learning_rate)
+        self.__checkpoint_dir = './saved_models/'
+        self.__checkpoint_prefix = os.path.join(self.__checkpoint_dir, "ckpt")
+        self.__root = tf.train.Checkpoint(optimizer=self.__optimizer,
+                           model=self.__model,
+                           optimizer_step=tf.train.get_or_create_global_step())
         self.__lossHistory = []
         return
 
@@ -217,6 +224,16 @@ class Agent:
         print('My Situations:')
         for s in self.__situations:
             s.printSituation()
+
+    def saveModel(self, file_path=None):
+        if file_path:
+            self.__checkpoint_dir = file_path
+        self.__root.save(self.__checkpoint_prefix)
+
+    def loadModel(self, file_path=None):
+        if file_path:
+            self.__checkpoint_dir = file_path
+        self.__root.restore(tf.train.latest_checkpoint(self.__checkpoint_dir))
 
     def saveSituations(self, file_path=None):
         if not file_path:
