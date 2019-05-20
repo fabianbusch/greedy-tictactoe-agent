@@ -19,7 +19,7 @@ agent2.loadSituations()
 
 game = TicTacToeGame(agent1, agent2)
 
-EPISODES = 50000
+EPISODES = 10000
 
 i = 0
 while i < EPISODES:
