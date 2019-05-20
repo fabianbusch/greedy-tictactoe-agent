@@ -90,14 +90,23 @@ class Agent:
         self.__history = []
 
     def __oneHot(self, squares):
+        if self.debug: print(squares)
         arr = np.zeros(27)
-        for square in range(len(squares)):
+        if self.debug: print(arr)
+        square = 0
+        for arrPlace in range(0, len(arr), 3):
+            if self.debug: print('For', square, 'with value', squares[square])
             if squares[square] == 'N':
-                arr[square] = 1
+                arr[arrPlace] = 1
+                if self.debug: print('Arr', arrPlace, 'is value', arr[arrPlace])
             elif squares[square] == 'X':
-                arr[square+1] = 1
+                arr[arrPlace+1] = 1
+                if self.debug: print('Arr', arrPlace+1, 'is value', arr[arrPlace+1])
             elif squares[square] == 'O':
-                arr[square+2] = 1
+                arr[arrPlace+2] = 1
+                if self.debug: print('Arr', arrPlace+2, 'is value', arr[arrPlace+2])
+            square += 1
+        if self.debug: print(arr)
         return tf.convert_to_tensor([arr], np.float32)
 
     def learnHistory(self):
