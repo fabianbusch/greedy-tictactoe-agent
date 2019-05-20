@@ -29,15 +29,10 @@ while i < EPISODES:
     if i % 100 == 0:
         print('EPISODE', i, 'of', EPISODES)
 
-    if i % 1000 == 0:
-        #agent1.saveSituations()
-        agent2.saveSituations()
-
     while not done:
         done = game.done()
 
     agent1.learnHistory()
-    agent2.learnHistory()
     game.reset()
     i += 1
 
