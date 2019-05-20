@@ -11,10 +11,10 @@ from agent import Agent
 import matplotlib.pyplot as plt
 import math
 
-agent1 = Agent('Agent1', 0.3, 1, 0.001, deepLearn=True, debug=False)
+agent1 = Agent('Agent1', 0.5, 1, 0.001, deepLearn=True, debug=False)
 agent2 = Agent('Agent2', 1, 1, 0.1)
 
-#agent1.loadSituations()
+agent1.loadModel()
 agent2.loadSituations()
 
 game = TicTacToeGame(agent1, agent2)
@@ -35,6 +35,8 @@ while i < EPISODES:
     agent1.learnHistory()
     game.reset()
     i += 1
+
+agent1.saveModel()
 
 lossHistory = agent1.getLossHistory()
 
